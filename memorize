@@ -1,0 +1,21 @@
+function memoize(fn) {
+    const cache = {};
+    let callCount = 0;
+
+    const memoizedFn = function(...args) {
+        const key = JSON.stringify(args);
+
+        if (key in cache) {
+            return cache[key];
+        }
+
+        const result = fn(...args);
+        cache[key] = result;
+        callCount++;
+        return result;
+    };
+
+    memoizedFn.getCallCount = () => callCount;
+
+    return memoizedFn;
+}
